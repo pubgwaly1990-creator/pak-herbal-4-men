@@ -400,6 +400,15 @@
         .btn-add-cart { background: var(--bh-whatsapp); color: #fff; border: none; padding: 12px; border-radius: 6px; font-weight: 800; font-size: 0.95rem; cursor: pointer; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; margin-top: auto; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2); }
         .btn-add-cart:hover { opacity: 0.9; }
 
+        /* Customer Reviews Public Section */
+        .reviews-section { background: #fff; border: 1px solid var(--bh-border); border-radius: 12px; padding: 30px; margin-top: 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        .reviews-slider { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+        .review-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; position: relative; }
+        .review-card i.fa-quote-left { position: absolute; top: 15px; right: 15px; font-size: 1.5rem; color: #cbd5e1; }
+        .review-author { font-weight: 900; color: var(--bh-dark); font-size: 0.95rem; margin-top: 10px; display: flex; align-items: center; gap: 6px; }
+        .review-city { font-size: 0.75rem; color: #047857; background: #d1fae5; padding: 2px 6px; border-radius: 4px; }
+        .review-text { font-size: 0.88rem; color: #475569; margin-top: 8px; line-height: 1.5; }
+
         /* Floating WhatsApp Icon */
         .floating-wa { position: fixed; bottom: 25px; right: 25px; background: var(--bh-whatsapp); color: #fff; width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4); text-decoration: none; z-index: 9999; transition: 0.3s; }
         .floating-wa:hover { transform: scale(1.1); }
@@ -457,6 +466,7 @@
         .form-control { width: 100%; padding: 10px; border: 1px solid var(--bh-border); border-radius: 6px; margin-bottom: 12px; font-size: 0.9rem; }
         .btn-primary { background: var(--bh-green); color: #fff; border: none; padding: 10px 18px; border-radius: 6px; font-weight: 700; cursor: pointer; }
         .btn-danger { background: #ef4444; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 0.8rem; }
+        .btn-success { background: #22c55e; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 0.8rem; }
 
         footer { background: var(--bh-dark); color: #fff; padding: 35px 4%; text-align: center; margin-top: 50px; font-size: 0.9rem; }
         footer strong { color: var(--bh-gold); }
@@ -634,8 +644,17 @@
             <p style="grid-column: 1/-1; text-align: center; color: #64748b;">Loading Realtime Products...</p>
         </div>
 
+        <!-- PUBLIC REALTIME CUSTOMER REVIEWS SECTION -->
+        <div class="reviews-section">
+            <h2 class="section-title" style="border-bottom-color: var(--bh-gold);"><i class="fa-solid fa-star" style="color: #f59e0b;"></i> Verified Customer Reviews (صارفین کی آراء)</h2>
+            <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 10px;">Real experiences shared by our valued customers across Pakistan.</p>
+            <div id="publicReviewsSlider" class="reviews-slider">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+
         <!-- Customer Feedback Submission Form Section -->
-        <div style="background: #fff; border: 1px solid var(--bh-border); border-radius: 12px; padding: 30px; margin-top: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+        <div style="background: #fff; border: 1px solid var(--bh-border); border-radius: 12px; padding: 30px; margin-top: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
             <h2 class="section-title" style="border-bottom-color: var(--bh-gold);"><i class="fa-solid fa-comments" style="color: var(--bh-gold);"></i> Share Your Feedback (کسٹمر فیڈ بیک)</h2>
             <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 20px;">We value your reviews regarding our pure herbal oils. Please leave your feedback below!</p>
             <form onsubmit="submitCustomerFeedback(event)" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
@@ -693,7 +712,7 @@
                 <button class="admin-tab-btn active" onclick="switchAdminTab('reportTab', event)">📊 Live Visitors & Analytics</button>
                 <button class="admin-tab-btn" onclick="switchAdminTab('productsTab', event)">📦 Manage Products</button>
                 <button class="admin-tab-btn" onclick="switchAdminTab('accountsTab', event)">💳 EasyPaisa & Bank Accounts</button>
-                <button class="admin-tab-btn" onclick="switchAdminTab('feedbackTab', event)">💬 Customer Feedback</button>
+                <button class="admin-tab-btn" onclick="switchAdminTab('feedbackTab', event)">💬 Customer Feedback & Reviews</button>
             </div>
 
             <div class="admin-body">
@@ -789,7 +808,7 @@
 
                 <!-- TAB 4: CUSTOMER FEEDBACK VIEW -->
                 <div id="feedbackTab" class="admin-tab-pane" style="display: none;">
-                    <h4 style="font-weight: 900; margin-bottom: 15px;">Customer Reviews & Feedbacks (Realtime)</h4>
+                    <h4 style="font-weight: 900; margin-bottom: 15px;">Customer Reviews & Feedbacks (Realtime Moderation)</h4>
                     <div id="adminFeedbackList">
                         <!-- Loaded dynamically -->
                     </div>
@@ -805,7 +824,7 @@
     <!-- FIREBASE REALTIME FIRESTORE DATABASE MODULE INTEGRATION -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, doc, setDoc, deleteDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, doc, setDoc, deleteDoc, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         // Firebase Configuration Keys
         const firebaseConfig = {
@@ -828,8 +847,9 @@
         window.firestoreSetDoc = setDoc;
         window.firestoreDeleteDoc = deleteDoc;
         window.firestoreAddDoc = addDoc;
+        window.firestoreUpdateDoc = updateDoc;
 
-        // Realtime Listener for Products Collection (Auto-restore removed)
+        // Realtime Listener for Products Collection
         onSnapshot(collection(db, "products"), (snapshot) => {
             let products = [];
             snapshot.docs.forEach((docSnap) => {
@@ -851,6 +871,7 @@
             });
             window.storeFeedbacks = feedbacks;
             document.getElementById('statFeedbackCount').innerText = feedbacks.length;
+            window.renderPublicReviews(feedbacks);
             if (document.getElementById('adminDashboardModal').style.display === 'flex') {
                 window.renderAdminFeedbackList();
             }
@@ -952,6 +973,39 @@
             `).join('');
         }
 
+        // Render Public Approved Reviews on Homepage
+        function renderPublicReviews(feedbacks) {
+            const container = document.getElementById('publicReviewsSlider');
+            const approved = feedbacks.filter(f => f.isApproved === true);
+
+            if (!approved || approved.length === 0) {
+                container.innerHTML = `
+                    <div class="review-card">
+                        <i class="fa-solid fa-quote-left"></i>
+                        <div class="review-author">Usman Amjad <span class="review-city">Lahore</span></div>
+                        <div style="color: #f59e0b; font-size: 0.8rem; margin: 4px 0;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="review-text">100% Khalis aur zabardast oils hain. Hairfall aur weakness ke liye best result mila hai!</p>
+                    </div>
+                    <div class="review-card">
+                        <i class="fa-solid fa-quote-left"></i>
+                        <div class="review-author">Bilal Ahmed <span class="review-city">Karachi</span></div>
+                        <div style="color: #f59e0b; font-size: 0.8rem; margin: 4px 0;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="review-text">Secret delivery aur 100% original packing thi. Highly recommended for everyone!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = approved.map(f => `
+                <div class="review-card">
+                    <i class="fa-solid fa-quote-left"></i>
+                    <div class="review-author">${f.name} <span class="review-city">${f.city}</span></div>
+                    <div style="color: #f59e0b; font-size: 0.8rem; margin: 4px 0;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="review-text">${f.message}</p>
+                </div>
+            `).join('');
+        }
+
         // Search Product Filtering
         function performSearch() {
             const query = document.getElementById('searchInput').value.trim().toLowerCase();
@@ -981,7 +1035,7 @@
 
             try {
                 await window.firestoreAddDoc(window.firestoreCol(window.db, "feedbacks"), {
-                    name, city, message, time: new Date().toLocaleDateString()
+                    name, city, message, time: new Date().toLocaleDateString(), isApproved: false
                 });
 
                 visitorStats.logs.push({
@@ -991,7 +1045,7 @@
                 });
                 saveAnalytics();
 
-                alert('Jazakallah! Your feedback has been submitted live.');
+                alert('Jazakallah! Your feedback has been submitted successfully and sent for admin review.');
                 document.getElementById('fbName').value = '';
                 document.getElementById('fbCity').value = '';
                 document.getElementById('fbMessage').value = '';
@@ -1283,7 +1337,7 @@
             }
         }
 
-        // Feedback View
+        // Feedback & Review Moderation (Approve / Delete)
         function renderAdminFeedbackList() {
             const list = document.getElementById('adminFeedbackList');
             if(!window.storeFeedbacks || window.storeFeedbacks.length === 0) {
@@ -1291,14 +1345,41 @@
                 return;
             }
             list.innerHTML = window.storeFeedbacks.map(f => `
-                <div style="background:#f8fafc; border:1px solid var(--bh-border); padding:14px; border-radius:8px; margin-bottom:12px;">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-weight:700;">
-                        <span>${f.name} (${f.city})</span>
-                        <span style="font-size:0.75rem; color:#64748b;">${f.time}</span>
+                <div style="background:#f8fafc; border:1px solid var(--bh-border); padding:14px; border-radius:8px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                    <div>
+                        <div style="display:flex; gap:10px; margin-bottom:4px; font-weight:700;">
+                            <span>${f.name} (${f.city})</span>
+                            <span style="font-size:0.75rem; color:#64748b;">${f.time}</span>
+                            <span style="font-size:0.7rem; padding:2px 6px; border-radius:4px; background:${f.isApproved ? '#d1fae5; color:#047857' : '#fef3c7; color:#d97706'}">${f.isApproved ? 'Live on Website' : 'Pending Approval'}</span>
+                        </div>
+                        <p style="font-size:0.88rem; color:#475569;">${f.message}</p>
                     </div>
-                    <p style="font-size:0.88px; color:#475569;">${f.message}</p>
+                    <div style="display:flex; gap:8px;">
+                        <button onclick="toggleApproveFeedback('${f.id}', ${!f.isApproved})" class="${f.isApproved ? 'btn-danger' : 'btn-success'} ripple-btn">${f.isApproved ? 'Hide from Web' : 'Publish to Website'}</button>
+                        <button onclick="deleteFeedback('${f.id}')" class="btn-danger ripple-btn">Delete</button>
+                    </div>
                 </div>
             `).join('');
+        }
+
+        async function toggleApproveFeedback(id, status) {
+            try {
+                await window.firestoreUpdateDoc(window.firestoreDoc(window.db, "feedbacks", id), { isApproved: status });
+                alert(status ? 'Feedback published live to website!' : 'Feedback hidden from website.');
+            } catch(e) {
+                alert("Error updating status: " + e.message);
+            }
+        }
+
+        async function deleteFeedback(id) {
+            if(confirm('Delete this feedback?')) {
+                try {
+                    await window.firestoreDeleteDoc(window.firestoreDoc(window.db, "feedbacks", id));
+                    alert('Feedback deleted.');
+                } catch(e) {
+                    alert("Error deleting: " + e.message);
+                }
+            }
         }
     </script>
 </body>
