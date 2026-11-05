@@ -329,6 +329,11 @@
         .badge-tag { position: absolute; top: 12px; left: 12px; background: var(--bh-gold); color: #fff; font-size: 0.72rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; }
 
         .p-info { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+        .p-rating-sold { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.8rem; font-weight: 700; }
+        .p-rating { color: #f59e0b; display: flex; align-items: center; gap: 4px; background: #fef3c7; padding: 2px 8px; border-radius: 12px; }
+        .p-sold { color: #047857; background: #d1fae5; padding: 2px 8px; border-radius: 12px; }
+        .p-stock { color: #64748b; font-size: 0.75rem; margin-bottom: 10px; font-weight: 600; }
+        
         .p-title { font-size: 1.15rem; font-weight: 900; color: var(--bh-dark); margin-bottom: 8px; }
         .p-desc { font-size: 0.88rem; color: #64748b; margin-bottom: 15px; line-height: 1.4; }
         .p-price { font-size: 1.25rem; font-weight: 900; color: var(--bh-green); margin-bottom: 15px; }
@@ -477,11 +482,11 @@
         </div>
     </nav>
 
-    <!-- TikTok Shop Style Live Video Banner Section with promo.mp4 -->
+    <!-- TikTok Shop Style Live Video Banner Section with Force Play Script Integration -->
     <section class="tiktok-video-section">
         <div class="tiktok-video-box">
-            <video autoplay muted loop playsinline controls>
-                <source src="promo.mp4" type="video/mp4">
+            <video id="promoVideoPlayer" autoplay muted loop playsinline controls preload="auto">
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-drops-of-water-on-a-plant-leaf-41584-large.mp4" type="video/mp4">
                 Your browser does not support HTML5 video.
             </video>
         </div>
@@ -499,8 +504,8 @@
 
     <!-- Hero Banner with Continuous Background Video -->
     <section class="hero-banner water-reflection">
-        <video autoplay muted loop playsinline class="hero-video-bg">
-            <source src="promo.mp4" type="video/mp4">
+        <video autoplay muted loop playsinline class="hero-video-bg" preload="auto">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-drops-of-water-on-a-plant-leaf-41584-large.mp4" type="video/mp4">
             Your browser does not support HTML5 video.
         </video>
         <div class="hero-video-overlay"></div>
@@ -565,9 +570,6 @@
             <span id="toastTime">Just now • Live Verified Order</span>
         </div>
     </div>
-
-    <!-- NOTIFICATION AUDIO SYNTHESIZER -->
-    <audio id="orderNotificationSound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
 
     <!-- ADMIN PIN MODAL (Hidden PIN Code 7866) -->
     <div id="adminPinModal" class="admin-modal">
@@ -733,12 +735,15 @@
         window.firestoreDeleteDoc = deleteDoc;
         window.firestoreAddDoc = addDoc;
 
-        // Initial Seed Products
+        // Initial Seed Products with Rating, Stock & Varying Sold Count
         const initialSeedProducts = [
             { 
                 id: 'p1', 
                 title: 'Shafi Herbal Pure Natural Hair Growth Oil (30ml Course)', 
                 price: '899', 
+                rating: '4.9',
+                sold: '1,420+',
+                stock: 100,
                 image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800', 
                 desc: 'کیا آپ بالوں کے گرنے، خشکی اور کمزور جڑوں سے پریشان ہیں؟ Shafi Herbal Hair Oil 100% قدرتی جڑی بوٹیوں (آملہ، ریٹھا، شکا کائی، بھنگراج، کلونجی) کا نایاب امتزاج ہے جو بالوں کو گھنا، چمکدار اور جڑوں سے مضبوط بناتا ہے۔' 
             },
@@ -746,6 +751,9 @@
                 id: 'p2', 
                 title: 'Mardana Kamzori Oil / Man Power Massage Oil (100ml)', 
                 price: '1,299', 
+                rating: '4.9',
+                sold: '980+',
+                stock: 100,
                 image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800', 
                 desc: '100% Khalis Herbal Massage Oil infused with Olive Oil, Kalonji Oil, Almond & Vitamin E. جسمانی طاقت، توانائی اور مردانه صحت کی قدرتی معاون۔' 
             },
@@ -753,6 +761,9 @@
                 id: 'p3', 
                 title: 'Shafi Herbal 100% Qudrati Ajzaa Ingredients Formula', 
                 price: '999', 
+                rating: '4.9',
+                sold: '650+',
+                stock: 100,
                 image: 'https://images.unsplash.com/photo-1512290900672-ed2f5b45f448?w=800', 
                 desc: 'Koi Chemical Nahi - 100% Khalis Qudrati! Trusted natural care designed to deliver ultimate root nourishment and vibrant hair health without any artificial additives.' 
             }
@@ -812,6 +823,17 @@
         window.storeAccounts = [];
         window.storeFeedbacks = [];
 
+        // Force Video Play on Page Load & Interactions
+        window.addEventListener('DOMContentLoaded', () => {
+            const vids = document.querySelectorAll('video');
+            vids.forEach(v => {
+                v.play().catch(e => {
+                    console.log("Autoplay prevented, adding click listener to play.");
+                    document.body.addEventListener('click', () => { v.play(); }, { once: true });
+                });
+            });
+        });
+
         // Mouse Move Glow Follower
         const cursorGlow = document.getElementById('cursorGlow');
         window.addEventListener('mousemove', (e) => {
@@ -847,6 +869,15 @@
             if (intro) {
                 intro.classList.add('shutter-open');
             }
+            // Ensure videos play when shutter opens
+            document.querySelectorAll('video').forEach(v => v.play().catch(e => {}));
+        }
+
+        // Helper to generate dynamic sold count if missing
+        function getSoldCount(p, index) {
+            if (p.sold) return p.sold;
+            const baseCounts = [1250, 890, 740, 1100, 950, 620];
+            return (baseCounts[index % baseCounts.length] + (index * 7)) + '+';
         }
 
         // Render Website Store Products Catalog
@@ -857,13 +888,18 @@
                 return;
             }
 
-            container.innerHTML = productsToRender.map(p => `
+            container.innerHTML = productsToRender.map((p, idx) => `
                 <div class="product-card golden-glow-card water-reflection" onclick="logProductCheck('${p.title}')">
                     <div class="p-img-box">
                         <span class="badge-tag">100% Qudrati</span>
                         <img src="${p.image}" alt="${p.title}">
                     </div>
                     <div class="p-info">
+                        <div class="p-rating-sold">
+                            <span class="p-rating"><i class="fa-solid fa-star"></i> ${p.rating || '4.9'} / 5.0 (Good)</span>
+                            <span class="p-sold"><i class="fa-solid fa-fire"></i> ${getSoldCount(p, idx)} Sold</span>
+                        </div>
+                        <div class="p-stock"><i class="fa-solid fa-boxes-stacked" style="color: var(--bh-whatsapp);"></i> In Stock: <strong>${p.stock || 100} Items</strong></div>
                         <h3 class="p-title">${p.title}</h3>
                         <p class="p-desc">${p.desc}</p>
                         <div class="p-price">Rs. ${p.price}</div>
@@ -923,7 +959,7 @@
             }
         }
 
-        /* --- LIVE ORDER NOTIFICATION TOAST SIMULATOR --- */
+        /* --- LIVE ORDER NOTIFICATION TOAST SIMULATOR (SILENT / NO AUDIO) --- */
         const sampleOrders = [
             { name: "Usman from Lahore", item: "Shafi Herbal Hair Oil" },
             { name: "Hamza from Karachi", item: "Man Power Massage Oil" },
@@ -933,13 +969,6 @@
 
         function showOrderToast() {
             const toast = document.getElementById('orderToast');
-            const notifySound = document.getElementById('orderNotificationSound');
-            
-            if (notifySound) {
-                notifySound.currentTime = 0;
-                notifySound.play().catch(e => { console.log(e); });
-            }
-
             const randomOrder = sampleOrders[Math.floor(Math.random() * sampleOrders.length)];
             const randomMins = Math.floor(Math.random() * 6) + 1;
 
@@ -1073,11 +1102,14 @@
 
         function renderAdminProductsList() {
             const list = document.getElementById('adminProductsList');
-            list.innerHTML = window.storeProducts.map(p => `
+            list.innerHTML = window.storeProducts.map((p, idx) => `
                 <div style="display:flex; align-items:center; justify-content:space-between; background:#f8fafc; border:1px solid var(--bh-border); padding:12px; border-radius:8px; margin-bottom:10px; font-size:0.9rem;">
                     <div style="display:flex; align-items:center; gap:12px;">
                         <img src="${p.image}" alt="" style="width:40px; height:40px; object-fit:cover; border-radius:4px;">
-                        <div><strong>${p.title}</strong> — <span style="color:var(--bh-green);">Rs. ${p.price}</span></div>
+                        <div>
+                            <strong>${p.title}</strong> — <span style="color:var(--bh-green);">Rs. ${p.price}</span>
+                            <div style="font-size:0.75rem; color:#64748b;">⭐ Rating: ${p.rating || '4.9'} | Sold: ${getSoldCount(p, idx)} | Stock: ${p.stock || 100}</div>
+                        </div>
                     </div>
                     <div style="display:flex; gap:8px;">
                         <button onclick="editProduct('${p.id}')" class="ripple-btn" style="background:#f59e0b; color:#fff; border:none; padding:6px 12px; border-radius:4px; font-weight:700; cursor:pointer; font-size:0.8rem;">Edit</button>
@@ -1100,6 +1132,8 @@
         function cancelProductForm() {
             document.getElementById('productFormBox').style.display = 'none';
         }
+
+        // Auto assign unique sold count & default stock/rating for new products
         async function saveProductData() {
             const id = document.getElementById('editProductId').value;
             const title = document.getElementById('pTitleInput').value;
@@ -1114,7 +1148,18 @@
             }
 
             const docId = id ? id : 'p_' + Date.now();
-            const productObj = { id: docId, title, price, image, desc };
+            const randomSold = (Math.floor(Math.random() * 800) + 500) + '+';
+
+            const productObj = { 
+                id: docId, 
+                title, 
+                price, 
+                image, 
+                desc,
+                rating: '4.9',
+                sold: randomSold,
+                stock: 100
+            };
 
             try {
                 await window.firestoreSetDoc(window.firestoreDoc(window.db, "products", docId), productObj);
@@ -1124,6 +1169,7 @@
                 alert("Cloud save error: " + e.message);
             }
         }
+
         function editProduct(id) {
             const p = window.storeProducts.find(item => item.id === id);
             if(p) {
