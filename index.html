@@ -116,6 +116,65 @@
             pointer-events: none;
         }
 
+        /* Continuous Fire Glow Effect for High-Lighting Notice Box */
+        @keyframes continuousFireGlow {
+            0%, 100% { 
+                box-shadow: 0 0 20px #ff4500, 0 0 40px #ff8c00, inset 0 0 15px rgba(255, 69, 0, 0.4); 
+                border-color: #ff4500; 
+            }
+            50% { 
+                box-shadow: 0 0 35px #ff8c00, 0 0 60px #ffe600, inset 0 0 25px rgba(255, 230, 0, 0.6); 
+                border-color: #ffe600; 
+            }
+        }
+        .fire-highlight-box {
+            animation: continuousFireGlow 1.8s infinite ease-in-out;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(6, 95, 70, 0.95));
+            border: 3px solid #ff4500;
+            border-radius: 16px;
+            padding: 25px 30px;
+            margin: 30px 0 40px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        .fire-box-title {
+            color: #ffd700;
+            font-size: 1.4rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            padding-bottom: 10px;
+        }
+        .fire-box-content p {
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: #f1f5f9;
+            margin-bottom: 15px;
+        }
+        .fire-box-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .fire-feature-item {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #ffe600;
+        }
+
         /* Fire Flame Animation for Live Notifications */
         @keyframes fireGlow {
             0%, 100% { box-shadow: 0 0 15px #ff4500, 0 0 30px #ff8c00, inset 0 0 10px #ff0000; border-color: #ff4500; }
@@ -482,11 +541,11 @@
         </div>
     </nav>
 
-    <!-- TikTok Shop Style Live Video Banner Section with Force Play Script Integration -->
+    <!-- TikTok Shop Style Live Video Banner Section with promo.mp4 -->
     <section class="tiktok-video-section">
         <div class="tiktok-video-box">
-            <video id="promoVideoPlayer" autoplay muted loop playsinline controls preload="auto">
-                <source src="https://assets.mixkit.co/videos/preview/mixkit-drops-of-water-on-a-plant-leaf-41584-large.mp4" type="video/mp4">
+            <video autoplay muted loop playsinline controls>
+                <source src="promo.mp4" type="video/mp4">
                 Your browser does not support HTML5 video.
             </video>
         </div>
@@ -504,8 +563,8 @@
 
     <!-- Hero Banner with Continuous Background Video -->
     <section class="hero-banner water-reflection">
-        <video autoplay muted loop playsinline class="hero-video-bg" preload="auto">
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-drops-of-water-on-a-plant-leaf-41584-large.mp4" type="video/mp4">
+        <video autoplay muted loop playsinline class="hero-video-bg">
+            <source src="promo.mp4" type="video/mp4">
             Your browser does not support HTML5 video.
         </video>
         <div class="hero-video-overlay"></div>
@@ -531,6 +590,41 @@
             <a href="https://wa.me/923424342996?text=Assalam-o-Alaikum%20Pak%20Herbal%204%20Men,%20I%20want%20to%20inquire%20about%20your%20herbal%20oils." target="_blank" class="ripple-btn" style="background: var(--bh-whatsapp); color: #fff; text-decoration: none; padding: 10px 18px; border-radius: 6px; font-weight: 700; font-size: 0.88rem; display: flex; align-items: center; gap: 8px;">
                 <i class="fa-brands fa-whatsapp"></i> WhatsApp Order (+92 342 4342996)
             </a>
+        </div>
+
+        <!-- NEW HIGHLY HIGHLIGHTED FIRE EFFECT ANNOUNCEMENT BOX -->
+        <div class="fire-highlight-box">
+            <div class="fire-box-title">
+                <i class="fa-solid fa-fire-flame-curved" style="color: #ff4500;"></i>
+                🔥 SPECIAL ROYAL HERBAL CARE & PRIVACY GUARANTEE
+            </div>
+            <div class="fire-box-content">
+                <p dir="rtl" style="text-align: right; font-size: 1.1rem; font-weight: 700; color: #ffe600; font-family: 'Roboto', sans-serif;">
+                    کیا آپ بالوں کے گرنے، خشکی اور کمزور جڑوں سے پریشان ہیں؟ یا مردانہ کمزوری، ڈھیلا پن اور ناطاقتی کی وجہ سے اپنی شادی شدہ زندگی کو مکمل خوشگوار نہیں بنا پا رہے؟
+                </p>
+                <p dir="rtl" style="text-align: right; font-size: 1rem; color: #ffffff;">
+                    <strong>پاک ہربل</strong> آپ کے لیے لایا ہے 100% خالص اور اوریجنل قدرتی جڑی بوٹیوں سے تیار شدہ شاہکار، جو کسی بھی قسم کے سائیڈ ایفیکٹ کے بغیر آپ کی کھوئی ہوئی طاقت، توانائی اور خوبصورت گھنے بالوں کی واپسی کی ضمانت دیتا ہے!
+                </p>
+                
+                <div class="fire-box-features">
+                    <div class="fire-feature-item">
+                        <i class="fa-solid fa-shield-halved" style="color: #00f2fe; font-size: 1.2rem;"></i>
+                        <span>100% رازدارانہ ڈلیوری (Secret Packing)</span>
+                    </div>
+                    <div class="fire-feature-item">
+                        <i class="fa-solid fa-leaf" style="color: #22c55e; font-size: 1.2rem;"></i>
+                        <span>100% Original & Side-Effect Free</span>
+                    </div>
+                    <div class="fire-feature-item">
+                        <i class="fa-solid fa-lock" style="color: #ffd700; font-size: 1.2rem;"></i>
+                        <span>آپ کی تمام معلومات 100% محفوظ و رازدارانہ</span>
+                    </div>
+                    <div class="fire-feature-item">
+                        <i class="fa-solid fa-truck-fast" style="color: #ff0050; font-size: 1.2rem;"></i>
+                        <span>پورے پاکستان میں تیز ترین خفیہ ڈلیوری</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <h2 class="section-title"><i class="fa-solid fa-bottle-droplet" style="color: var(--bh-gold);"></i> Featured Herbal Oils Catalog (پروڈکٹس کیٹلاگ)</h2>
@@ -559,7 +653,7 @@
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
-    <!-- LIVE POPUP ORDER TOAST CONTAINER WITH FIRE EFFECT -->
+    <!-- LIVE POPUP ORDER TOAST CONTAINER WITH FIRE EFFECT (SOUND REMOVED) -->
     <div id="orderToast" class="order-toast fire-card">
         <div class="toast-icon">
             <i class="fa-solid fa-fire-flame-curved"></i>
@@ -823,17 +917,6 @@
         window.storeAccounts = [];
         window.storeFeedbacks = [];
 
-        // Force Video Play on Page Load & Interactions
-        window.addEventListener('DOMContentLoaded', () => {
-            const vids = document.querySelectorAll('video');
-            vids.forEach(v => {
-                v.play().catch(e => {
-                    console.log("Autoplay prevented, adding click listener to play.");
-                    document.body.addEventListener('click', () => { v.play(); }, { once: true });
-                });
-            });
-        });
-
         // Mouse Move Glow Follower
         const cursorGlow = document.getElementById('cursorGlow');
         window.addEventListener('mousemove', (e) => {
@@ -869,8 +952,6 @@
             if (intro) {
                 intro.classList.add('shutter-open');
             }
-            // Ensure videos play when shutter opens
-            document.querySelectorAll('video').forEach(v => v.play().catch(e => {}));
         }
 
         // Helper to generate dynamic sold count if missing
@@ -1148,6 +1229,8 @@
             }
 
             const docId = id ? id : 'p_' + Date.now();
+            
+            // Random distinct sold count between 500 and 1500 for newly added products
             const randomSold = (Math.floor(Math.random() * 800) + 500) + '+';
 
             const productObj = { 
