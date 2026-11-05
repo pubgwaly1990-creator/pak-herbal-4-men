@@ -532,7 +532,7 @@
 
         <!-- Dynamic Products Grid -->
         <div id="productsGridContainer" class="products-grid">
-            <!-- Loaded dynamically -->
+            <p style="grid-column: 1/-1; text-align: center; color: #64748b;">Loading Realtime Products...</p>
         </div>
 
         <!-- Customer Feedback Submission Form Section -->
@@ -588,7 +588,7 @@
             <div class="admin-header">
                 <div>
                     <h3 style="font-size: 1.1rem; font-weight: 900;"><i class="fa-solid fa-shield-halved"></i> Pak Herbal 4 Men — Exclusive Admin Control Panel</h3>
-                    <span style="font-size: 0.75rem; opacity: 0.8;">Manage Products with Local Picture Upload, EasyPaisa Accounts & Analytics</span>
+                    <span style="font-size: 0.75rem; opacity: 0.8;">Manage Realtime Cloud Products, EasyPaisa Accounts & Analytics</span>
                 </div>
                 <button onclick="closeAdminDashboard()" style="background: transparent; border: none; color: #fff; font-size: 1.2rem; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
             </div>
@@ -637,10 +637,10 @@
                     </table>
                 </div>
 
-                <!-- TAB 2: PRODUCTS MANAGER (Add / Edit / Delete with System Image Upload) -->
+                <!-- TAB 2: PRODUCTS MANAGER (Real-time Cloud Sync) -->
                 <div id="productsTab" class="admin-tab-pane" style="display: none;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <h4 style="font-weight: 900;">Store Products Catalog</h4>
+                        <h4 style="font-weight: 900;">Store Products Catalog (Cloud Database)</h4>
                         <button onclick="openProductForm()" class="btn-primary ripple-btn"><i class="fa-solid fa-plus"></i> Add New Product</button>
                     </div>
 
@@ -693,7 +693,7 @@
 
                 <!-- TAB 4: CUSTOMER FEEDBACK VIEW -->
                 <div id="feedbackTab" class="admin-tab-pane" style="display: none;">
-                    <h4 style="font-weight: 900; margin-bottom: 15px;">Customer Reviews & Feedbacks</h4>
+                    <h4 style="font-weight: 900; margin-bottom: 15px;">Customer Reviews & Feedbacks (Realtime)</h4>
                     <div id="adminFeedbackList">
                         <!-- Loaded dynamically -->
                     </div>
@@ -706,48 +706,112 @@
         <p>&copy; 2026 <strong>PAK HERBAL 4 MEN</strong> — 100% Pure Herbal Oils & Remedies. Orders WhatsApp: <strong>+92 342 4342996</strong></p>
     </footer>
 
-    <!-- JAVASCRIPT EFFECTS & FULL DATA MANAGEMENT LOGIC -->
-    <script>
-        // WhatsApp Ordering Number: 03424342996
-        const WHATSAPP_ORDER_NUMBER = "923424342996";
+    <!-- FIREBASE REALTIME FIRESTORE DATABASE MODULE INTEGRATION -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, doc, setDoc, deleteDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Initial Default Products based on your exact product images and details
-        let defaultProducts = [
+        // Firebase Configuration Keys
+        const firebaseConfig = {
+            apiKey: "AIzaSyAzSZux4EhLv0eAUMpsXkz2X7L36Te5wXw",
+            authDomain: "pak-herbal-db.firebaseapp.com",
+            projectId: "pak-herbal-db",
+            storageBucket: "pak-herbal-db.firebasestorage.app",
+            messagingSenderId: "1081678929743",
+            appId: "1:1081678929743:web:117b69d4a24158a156af3a",
+            measurementId: "G-C8GJ8PL0JE"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.db = db;
+        window.firestoreCol = collection;
+        window.firestoreOnSnapshot = onSnapshot;
+        window.firestoreDoc = doc;
+        window.firestoreSetDoc = setDoc;
+        window.firestoreDeleteDoc = deleteDoc;
+        window.firestoreAddDoc = addDoc;
+
+        // Initial Seed Products
+        const initialSeedProducts = [
             { 
                 id: 'p1', 
-                title: 'Shafi Herbal Hair Oil (30ml Course)', 
+                title: 'Shafi Herbal Pure Natural Hair Growth Oil (30ml Course)', 
                 price: '899', 
                 image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800', 
-                desc: '100% Khalis Qudrati Ajzaa (Amla, Reetha, Shikakai, Bhringraj, Aloe Vera, Neem, Coconut & Kalonji). Promotes hair growth, stops hair fall & dandruff, adds natural shine and volume.' 
+                desc: 'کیا آپ بالوں کے گرنے، خشکی اور کمزور جڑوں سے پریشان ہیں؟ Shafi Herbal Hair Oil 100% قدرتی جڑی بوٹیوں (آملہ، ریٹھا، شکا کائی، بھنگراج، کلونجی) کا نایاب امتزاج ہے جو بالوں کو گھنا، چمکدار اور جڑوں سے مضبوط بناتا ہے۔' 
             },
             { 
                 id: 'p2', 
                 title: 'Mardana Kamzori Oil / Man Power Massage Oil (100ml)', 
                 price: '1,299', 
                 image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800', 
-                desc: '100% Khalis Herbal Massage Oil infused with Olive Oil, Kalonji Oil, Almond & Vitamin E. Provides natural vitality, physical strength, improved circulation and instant comfort.' 
+                desc: '100% Khalis Herbal Massage Oil infused with Olive Oil, Kalonji Oil, Almond & Vitamin E. جسمانی طاقت، توانائی اور مردانه صحت کی قدرتی معاون۔' 
             },
             { 
                 id: 'p3', 
-                title: 'Pure Kalonji & Zaitoon Special Oil', 
+                title: 'Shafi Herbal 100% Qudrati Ajzaa Ingredients Formula', 
                 price: '999', 
                 image: 'https://images.unsplash.com/photo-1512290900672-ed2f5b45f448?w=800', 
-                desc: 'Traditional cold-pressed herbal blend for facial hair growth, skin nourishment, and ultimate strength. 100% chemical-free and side-effect free.' 
+                desc: 'Koi Chemical Nahi - 100% Khalis Qudrati! Trusted natural care designed to deliver ultimate root nourishment and vibrant hair health without any artificial additives.' 
             }
         ];
 
-        let defaultAccounts = [
-            { id: 'acc1', title: 'Usman Amjad', bank: 'EasyPaisa', number: '03424342996' }
-        ];
+        // Realtime Listener for Products Collection
+        onSnapshot(collection(db, "products"), (snapshot) => {
+            let products = [];
+            snapshot.docs.forEach((docSnap) => {
+                products.push({ id: docSnap.id, ...docSnap.data() });
+            });
 
-        let defaultFeedbacks = [
-            { name: 'Dr. Tariq Mahmood', city: 'Peshawar', message: 'Shafi herbal hair oil amazing results de raha hai! Highly recommended.', time: '2026-11-04' }
-        ];
+            // If Database is fresh empty, populate initial seeds
+            if (snapshot.empty) {
+                initialSeedProducts.forEach(async (p) => {
+                    await setDoc(doc(db, "products", p.id), p);
+                });
+            } else {
+                window.storeProducts = products;
+                window.renderStoreProducts(products);
+                if (document.getElementById('adminDashboardModal').style.display === 'flex') {
+                    window.renderAdminProductsList();
+                }
+            }
+        });
 
-        // Load or Initialize LocalStorage Data
-        let storeProducts = JSON.parse(localStorage.getItem('pak_herbal_products_v2')) || defaultProducts;
-        let storeAccounts = JSON.parse(localStorage.getItem('pak_herbal_accounts_v2')) || defaultAccounts;
-        let storeFeedbacks = JSON.parse(localStorage.getItem('pak_herbal_feedbacks_v2')) || defaultFeedbacks;
+        // Realtime Listener for Customer Feedbacks Collection
+        onSnapshot(collection(db, "feedbacks"), (snapshot) => {
+            let feedbacks = [];
+            snapshot.docs.forEach((docSnap) => {
+                feedbacks.push({ id: docSnap.id, ...docSnap.data() });
+            });
+            window.storeFeedbacks = feedbacks;
+            document.getElementById('statFeedbackCount').innerText = feedbacks.length;
+            if (document.getElementById('adminDashboardModal').style.display === 'flex') {
+                window.renderAdminFeedbackList();
+            }
+        });
+
+        // Realtime Listener for Payment Accounts Collection
+        onSnapshot(collection(db, "accounts"), (snapshot) => {
+            let accounts = [];
+            snapshot.docs.forEach((docSnap) => {
+                accounts.push({ id: docSnap.id, ...docSnap.data() });
+            });
+            window.storeAccounts = accounts;
+            if (document.getElementById('adminDashboardModal').style.display === 'flex') {
+                window.renderAdminAccountsList();
+            }
+        });
+    </script>
+
+    <!-- JAVASCRIPT EFFECTS & STORE FRONT INTERACTION LOGIC -->
+    <script>
+        const WHATSAPP_ORDER_NUMBER = "923424342996";
+
+        window.storeProducts = [];
+        window.storeAccounts = [];
+        window.storeFeedbacks = [];
 
         // Mouse Move Glow Follower
         const cursorGlow = document.getElementById('cursorGlow');
@@ -786,8 +850,8 @@
             }
         }
 
-        // Render Website Store Products Catalog with Golden Glow Effect
-        function renderStoreProducts(productsToRender = storeProducts) {
+        // Render Website Store Products Catalog
+        function renderStoreProducts(productsToRender = window.storeProducts) {
             const container = document.getElementById('productsGridContainer');
             if (!productsToRender || productsToRender.length === 0) {
                 container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #64748b;">No products found.</p>';
@@ -825,34 +889,39 @@
                 saveAnalytics();
                 updateStatsUI();
 
-                const filtered = storeProducts.filter(p => p.title.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query));
+                const filtered = window.storeProducts.filter(p => p.title.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query));
                 renderStoreProducts(filtered);
             } else {
-                renderStoreProducts(storeProducts);
+                renderStoreProducts(window.storeProducts);
             }
         }
 
-        // Customer Feedback Submission
-        function submitCustomerFeedback(e) {
+        // Customer Feedback Realtime Submission to Cloud
+        async function submitCustomerFeedback(e) {
             e.preventDefault();
             const name = document.getElementById('fbName').value;
             const city = document.getElementById('fbCity').value;
             const message = document.getElementById('fbMessage').value;
 
-            storeFeedbacks.push({ name, city, message, time: new Date().toLocaleDateString() });
-            localStorage.setItem('pak_herbal_feedbacks_v2', JSON.stringify(storeFeedbacks));
+            try {
+                await window.firestoreAddDoc(window.firestoreCol(window.db, "feedbacks"), {
+                    name, city, message, time: new Date().toLocaleDateString()
+                });
 
-            visitorStats.logs.push({
-                time: new Date().toLocaleTimeString(),
-                type: 'Feedback',
-                details: `${name} (${city}) submitted feedback`
-            });
-            saveAnalytics();
+                visitorStats.logs.push({
+                    time: new Date().toLocaleTimeString(),
+                    type: 'Feedback',
+                    details: `${name} (${city}) submitted feedback`
+                });
+                saveAnalytics();
 
-            alert('Jazakallah! Your feedback has been submitted successfully.');
-            document.getElementById('fbName').value = '';
-            document.getElementById('fbCity').value = '';
-            document.getElementById('fbMessage').value = '';
+                alert('Jazakallah! Your feedback has been submitted live.');
+                document.getElementById('fbName').value = '';
+                document.getElementById('fbCity').value = '';
+                document.getElementById('fbMessage').value = '';
+            } catch(err) {
+                alert("Error submitting feedback: " + err.message);
+            }
         }
 
         /* --- LIVE ORDER NOTIFICATION TOAST SIMULATOR --- */
@@ -900,7 +969,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             let today = new Date().toLocaleDateString();
-            let savedStats = JSON.parse(localStorage.getItem('pak_herbal_analytics_v2_' + today));
+            let savedStats = JSON.parse(localStorage.getItem('pak_herbal_analytics_v4_' + today));
             if (savedStats) {
                 visitorStats = savedStats;
                 visitorStats.visitors += 1;
@@ -912,19 +981,17 @@
                 });
             }
             saveAnalytics(today);
-            renderStoreProducts();
             updateStatsUI();
         });
 
         function saveAnalytics(dateKey = new Date().toLocaleDateString()) {
-            localStorage.setItem('pak_herbal_analytics_v2_' + dateKey, JSON.stringify(visitorStats));
+            localStorage.setItem('pak_herbal_analytics_v4_' + dateKey, JSON.stringify(visitorStats));
         }
 
         function updateStatsUI() {
             document.getElementById('statVisitorsCount').innerText = visitorStats.visitors;
             document.getElementById('statSearchCount').innerText = visitorStats.searches;
             document.getElementById('statViewsCount').innerText = visitorStats.views;
-            document.getElementById('statFeedbackCount').innerText = storeFeedbacks.length;
 
             const tbody = document.getElementById('reportLogsBody');
             if (visitorStats.logs.length === 0) {
@@ -961,7 +1028,7 @@
             updateStatsUI();
         }
 
-        /* --- ADMIN DASHBOARD & CRUD CONTROLS (Secret PIN: 7866) --- */
+        /* --- ADMIN DASHBOARD & CLOUD CRUD CONTROLS (Secret PIN: 7866) --- */
         function openAdminPinModal() {
             document.getElementById('adminPinModal').style.display = 'flex';
             document.getElementById('adminPinInput').value = '';
@@ -993,7 +1060,7 @@
             if(event) event.currentTarget.classList.add('active');
         }
 
-        // Product CRUD with System Image Upload (Choose Picture)
+        // Product Cloud CRUD with System Image Upload
         function previewImageFile(event) {
             const file = event.target.files[0];
             if (file) {
@@ -1007,7 +1074,7 @@
 
         function renderAdminProductsList() {
             const list = document.getElementById('adminProductsList');
-            list.innerHTML = storeProducts.map(p => `
+            list.innerHTML = window.storeProducts.map(p => `
                 <div style="display:flex; align-items:center; justify-content:space-between; background:#f8fafc; border:1px solid var(--bh-border); padding:12px; border-radius:8px; margin-bottom:10px; font-size:0.9rem;">
                     <div style="display:flex; align-items:center; gap:12px;">
                         <img src="${p.image}" alt="" style="width:40px; height:40px; object-fit:cover; border-radius:4px;">
@@ -1034,7 +1101,7 @@
         function cancelProductForm() {
             document.getElementById('productFormBox').style.display = 'none';
         }
-        function saveProductData() {
+        async function saveProductData() {
             const id = document.getElementById('editProductId').value;
             const title = document.getElementById('pTitleInput').value;
             const price = document.getElementById('pPriceInput').value;
@@ -1047,20 +1114,19 @@
                 image = 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800';
             }
 
-            if(id) {
-                storeProducts = storeProducts.map(p => p.id === id ? { id, title, price, image, desc } : p);
-            } else {
-                storeProducts.push({ id: 'p_' + Date.now(), title, price, image, desc });
-            }
+            const docId = id ? id : 'p_' + Date.now();
+            const productObj = { id: docId, title, price, image, desc };
 
-            localStorage.setItem('pak_herbal_products_v2', JSON.stringify(storeProducts));
-            cancelProductForm();
-            renderAdminProductsList();
-            renderStoreProducts();
-            alert('Product saved successfully!');
+            try {
+                await window.firestoreSetDoc(window.firestoreDoc(window.db, "products", docId), productObj);
+                cancelProductForm();
+                alert('Product saved and synced globally via Firebase!');
+            } catch(e) {
+                alert("Cloud save error: " + e.message);
+            }
         }
         function editProduct(id) {
-            const p = storeProducts.find(item => item.id === id);
+            const p = window.storeProducts.find(item => item.id === id);
             if(p) {
                 document.getElementById('productFormBox').style.display = 'block';
                 document.getElementById('productFormTitle').innerText = 'Edit Product';
@@ -1071,19 +1137,21 @@
                 document.getElementById('pDescInput').value = p.desc;
             }
         }
-        function deleteProduct(id) {
-            if(confirm('Are you sure you want to delete this product?')) {
-                storeProducts = storeProducts.filter(p => p.id !== id);
-                localStorage.setItem('pak_herbal_products_v2', JSON.stringify(storeProducts));
-                renderAdminProductsList();
-                renderStoreProducts();
+        async function deleteProduct(id) {
+            if(confirm('Are you sure you want to delete this product globally?')) {
+                try {
+                    await window.firestoreDeleteDoc(window.firestoreDoc(window.db, "products", id));
+                    alert('Product deleted globally!');
+                } catch(e) {
+                    alert("Delete error: " + e.message);
+                }
             }
         }
 
-        // Account CRUD
+        // Payment Account Cloud Operations
         function renderAdminAccountsList() {
             const list = document.getElementById('adminAccountsList');
-            list.innerHTML = storeAccounts.map(acc => `
+            list.innerHTML = window.storeAccounts.map(acc => `
                 <div style="display:flex; align-items:center; justify-content:space-between; background:#f8fafc; border:1px solid var(--bh-border); padding:12px; border-radius:8px; margin-bottom:10px; font-size:0.9rem;">
                     <div><strong>${acc.title}</strong> (${acc.bank}) — <span dir="ltr" style="font-weight:700; color:var(--bh-gold);">${acc.number}</span></div>
                     <button onclick="deleteAccount('${acc.id}')" class="btn-danger ripple-btn">Delete</button>
@@ -1099,35 +1167,41 @@
         function cancelAccountForm() {
             document.getElementById('accountFormBox').style.display = 'none';
         }
-        function saveAccountData() {
+        async function saveAccountData() {
             const title = document.getElementById('accTitleInput').value;
             const bank = document.getElementById('accBankInput').value;
             const number = document.getElementById('accNumberInput').value;
 
             if(!title || !bank || !number) { alert('Please fill all account details'); return; }
+            const accId = 'acc_' + Date.now();
 
-            storeAccounts.push({ id: 'acc_' + Date.now(), title, bank, number });
-            localStorage.setItem('pak_herbal_accounts_v2', JSON.stringify(storeAccounts));
-            cancelAccountForm();
-            renderAdminAccountsList();
-            alert('Account added successfully!');
+            try {
+                await window.firestoreSetDoc(window.firestoreDoc(window.db, "accounts", accId), { id: accId, title, bank, number });
+                cancelAccountForm();
+                alert('Account saved globally!');
+            } catch(e) {
+                alert("Account save error: " + e.message);
+            }
         }
-        function deleteAccount(id) {
+        async function deleteAccount(id) {
             if(confirm('Are you sure you want to delete this account?')) {
-                storeAccounts = storeAccounts.filter(acc => acc.id !== id);
-                localStorage.setItem('pak_herbal_accounts_v2', JSON.stringify(storeAccounts));
-                renderAdminAccountsList();
+                try {
+                    await window.firestoreDeleteDoc(window.firestoreDoc(window.db, "accounts", id));
+                    alert('Account deleted!');
+                } catch(e) {
+                    alert("Account delete error: " + e.message);
+                }
             }
         }
 
         // Feedback View
         function renderAdminFeedbackList() {
             const list = document.getElementById('adminFeedbackList');
-            if(storeFeedbacks.length === 0) {
+            if(!window.storeFeedbacks || window.storeFeedbacks.length === 0) {
                 list.innerHTML = '<p style="color:#64748b;">No customer feedback received yet.</p>';
                 return;
             }
-            list.innerHTML = storeFeedbacks.map(f => `
+            list.innerHTML = window.storeFeedbacks.map(f => `
                 <div style="background:#f8fafc; border:1px solid var(--bh-border); padding:14px; border-radius:8px; margin-bottom:12px;">
                     <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-weight:700;">
                         <span>${f.name} (${f.city})</span>
