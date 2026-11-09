@@ -340,17 +340,15 @@
         .main-container { max-width: 1300px; margin: 30px auto; padding: 0 20px; }
         .section-title { font-size: 1.5rem; font-weight: 900; color: var(--bh-dark); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid var(--bh-green); padding-bottom: 8px; }
 
-        /* Compact & Balanced Product Cards Grid */
+        /* Compact Product Cards Grid */
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-bottom: 40px; }
         .product-card { background: #fff; border: 1px solid var(--bh-border); border-radius: 12px; overflow: hidden; transition: 0.3s; display: flex; flex-direction: column; box-shadow: 0 4px 15px rgba(0,0,0,0.02); cursor: pointer; }
         .product-card:hover { box-shadow: 0 8px 25px rgba(0,0,0,0.08); border-color: var(--bh-green); }
         
-        /* Adjusted Height for Image Box */
         .p-img-box { height: 190px; padding: 12px; display: flex; align-items: center; justify-content: center; background: #fff; border-bottom: 1px solid #f1f5f9; position: relative; }
         .p-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 6px; }
         .badge-tag { position: absolute; top: 10px; left: 10px; background: var(--bh-gold); color: #fff; font-size: 0.7rem; font-weight: 800; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; }
 
-        /* Compact Info Area with Text Clamping */
         .p-info { padding: 15px; display: flex; flex-direction: column; flex-grow: 1; }
         .p-rating-sold { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 0.78rem; font-weight: 700; }
         .p-rating { color: #f59e0b; display: flex; align-items: center; gap: 4px; background: #fef3c7; padding: 2px 7px; border-radius: 10px; }
@@ -359,7 +357,6 @@
         
         .p-title { font-size: 1.05rem; font-weight: 900; color: var(--bh-dark); margin-bottom: 6px; line-height: 1.3; }
         
-        /* 2 Line Text Clamp for Compact Description */
         .p-desc { 
             font-size: 0.83rem; 
             color: #64748b; 
@@ -376,6 +373,69 @@
 
         .btn-add-cart { background: var(--bh-whatsapp); color: #fff; border: none; padding: 10px; border-radius: 6px; font-weight: 800; font-size: 0.9rem; cursor: pointer; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; margin-top: auto; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2); }
         .btn-add-cart:hover { opacity: 0.9; }
+
+        /* PRODUCT DETAIL POPUP MODAL STYLING */
+        #productDetailModal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100000;
+            padding: 20px;
+        }
+        .product-detail-card {
+            background: #fff;
+            width: 100%;
+            max-width: 750px;
+            max-height: 90vh;
+            border-radius: 16px;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            border: 2px solid var(--bh-green);
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f1f5f9;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            color: #475569;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: 0.2s;
+        }
+        .modal-close-btn:hover { background: #ef4444; color: #fff; }
+        .detail-img-box {
+            background: #f8fafc;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid var(--bh-border);
+        }
+        .detail-img-box img {
+            max-width: 100%;
+            max-height: 280px;
+            object-fit: contain;
+        }
+        .detail-content-box {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+        }
 
         /* Floating WhatsApp Icon */
         .floating-wa { position: fixed; bottom: 25px; right: 25px; background: var(--bh-whatsapp); color: #fff; width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4); text-decoration: none; z-index: 9999; transition: 0.3s; }
@@ -599,6 +659,32 @@
 
     </main>
 
+    <!-- PRODUCT DETAIL POPUP MODAL -->
+    <div id="productDetailModal">
+        <div class="product-detail-card">
+            <button class="modal-close-btn" onclick="closeProductDetailModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="detail-img-box">
+                <img id="mProductImg" src="" alt="">
+            </div>
+            <div class="detail-content-box">
+                <span style="background: var(--bh-gold); color: #fff; font-size: 0.7rem; font-weight: 800; padding: 3px 8px; border-radius: 4px; width: max-content; text-transform: uppercase; margin-bottom: 8px;">100% Pure Organic</span>
+                <h2 id="mProductTitle" style="font-size: 1.3rem; font-weight: 900; color: var(--bh-dark); margin-bottom: 6px;"></h2>
+                <div style="display: flex; gap: 12px; align-items: center; font-size: 0.85rem; margin-bottom: 12px;">
+                    <span id="mProductRating" style="color: #f59e0b; font-weight: 700;"></span>
+                    <span id="mProductSold" style="color: var(--bh-accent); font-weight: 700;"></span>
+                </div>
+                <div id="mProductPrice" style="font-size: 1.5rem; font-weight: 900; color: var(--bh-green); margin-bottom: 12px;"></div>
+                
+                <h4 style="font-size: 0.9rem; font-weight: 900; color: var(--bh-dark); margin-bottom: 6px;">Product Full Details (مکمل تفصیلات):</h4>
+                <p id="mProductDesc" style="font-size: 0.9rem; color: #475569; line-height: 1.6; margin-bottom: 20px; direction: rtl; text-align: right; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid var(--bh-border);"></p>
+                
+                <a id="mProductWaBtn" href="#" target="_blank" class="btn-add-cart ripple-btn" style="padding: 12px; font-size: 1rem;">
+                    <i class="fa-brands fa-whatsapp"></i> Order Direct via WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!-- Floating WhatsApp Action -->
     <a href="https://wa.me/923424342996?text=Assalam-o-Alaikum%20Pak%20Herbal%204%20Men,%20I%20am%20interested%20in%20your%20herbal%20products." target="_blank" class="floating-wa ripple-btn" onclick="logAction('WhatsApp Floating Button Clicked')">
         <i class="fa-brands fa-whatsapp"></i>
@@ -759,7 +845,7 @@
                 sold: '1,520+',
                 stock: 100,
                 image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800', 
-                desc: 'Step 1: Tilla Nafees 30 ml — 100% خالص اور قُدْرتی جڑی بوٹیوں سے تیار کردہ نایاب تلا جو پٹھوں کو مضبوط اور طاقتور بنائے۔' 
+                desc: 'Step 1: Tilla Nafees 30 ml — 100% خالص اور قُدْرتی جڑی بوٹیوں سے تیار کردہ نایاب تلا جو پٹھوں کو مضبوط اور طاقتور بنائے۔ یہ خاص طور پر کمزوری کو دور کرنے اور طاقت بحال کرنے کے لیے مجرب ترین نسخہ ہے۔' 
             },
             { 
                 id: 'step2_cap_zafrani', 
@@ -769,7 +855,7 @@
                 sold: '1,180+',
                 stock: 100,
                 image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800', 
-                desc: 'Step 2: Capsule Zafrani — خالص زعفران اور قیمتی اجزا پر مشتمل جو جسمانی طاقت اور قوتِ مدافعت میں اضافہ کرے۔' 
+                desc: 'Step 2: Capsule Zafrani — خالص زعفران اور قیمتی اجزا پر مشتمل جو جسمانی طاقت اور قوتِ مدافعت میں اضافہ کرے۔ قدرتی انرجی فراہم کرتا ہے اور اعصابی کمزوری کا خاتمہ کرتا ہے۔' 
             },
             { 
                 id: 'step3_cap_toba', 
@@ -779,7 +865,7 @@
                 sold: '940+',
                 stock: 100,
                 image: 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=800', 
-                desc: 'Step 3: Capsule Toba Chandi Warq Wala — اصلی چاندی کے ورق اور روایتی مقوی اجزا سے تیار کردہ خاص کورس۔' 
+                desc: 'Step 3: Capsule Toba Chandi Warq Wala — اصلی چاندی کے ورق اور روایتی مقوی اجزا سے تیار کردہ خاص کورس۔ مردانہ طاقت کو بڑھاتا ہے اور قدرتی طور پر جسم کو طاقت دیتا ہے۔' 
             },
             { 
                 id: 'step4_ginseng', 
@@ -789,7 +875,7 @@
                 sold: '830+',
                 stock: 100,
                 image: 'https://images.unsplash.com/photo-1550572017-edd951b55104?w=800', 
-                desc: 'Step 4: Special Ginseng Capsule — Just dil ke marizon ke liye hai special! محفوظ اور قُدْرتی کورس جو دل کی کمزوری کو دور کرے۔' 
+                desc: 'Step 4: Special Ginseng Capsule — Just dil ke marizon ke liye hai special! محفوظ اور قُدْرتی کورس جو دل کی کمزوری کو دور کرے۔ یہ فارمولا دل کی صحت کے لیے 100% سیف ہے۔' 
             },
             { 
                 id: 'step5_hair_oil', 
@@ -799,7 +885,7 @@
                 sold: '2,150+',
                 stock: 100,
                 image: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=800', 
-                desc: 'Step 5: Hair Oil for Sikri — بالوں کی خشکی (سکری) اور سر کی خارش کا جڑ سے خاتمہ کرنے والا خالص جڑی بوٹیوں کا تیل۔' 
+                desc: 'Step 5: Hair Oil for Sikri — بالوں کی خشکی (سکری) اور سر کی خارش کا جڑ سے خاتمہ کرنے والا خالص جڑی بوٹیوں کا تیل۔ بالوں کو مضبوط، چمکدار اور گھنا بناتا ہے۔' 
             },
             { 
                 id: 'step6_shampoo', 
@@ -809,7 +895,7 @@
                 sold: '1,890+',
                 stock: 100,
                 image: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=800', 
-                desc: 'Step 6: Herbal Shampoo — کیمیکل سے پاک 100% ہربل شیمپو جو بالوں کو ریشمی، گھنا اور مضبوط بنائے۔' 
+                desc: 'Step 6: Herbal Shampoo — کیمیکل سے پاک 100% ہربل شیمپو جو بالوں کو ریشمی، گھنا اور مضبوط بنائے۔ بالوں کے گرنے کو روکتا ہے اور جڑوں کو طاقت دیتا ہے۔' 
             }
         ];
 
@@ -826,6 +912,27 @@
             if (intro) {
                 intro.classList.add('shutter-open');
             }
+        }
+
+        // Open Detailed Product Modal
+        function openProductDetailModal(id) {
+            const p = window.storeProducts.find(item => item.id === id);
+            if(p) {
+                document.getElementById('mProductImg').src = p.image;
+                document.getElementById('mProductTitle').innerText = p.title;
+                document.getElementById('mProductRating').innerHTML = `<i class="fa-solid fa-star"></i> ${p.rating || '4.9'} Rating`;
+                document.getElementById('mProductSold').innerHTML = `<i class="fa-solid fa-fire"></i> ${p.sold || '500+'} Sold`;
+                document.getElementById('mProductPrice').innerText = 'Rs. ' + p.price;
+                document.getElementById('mProductDesc').innerText = p.desc;
+                document.getElementById('mProductWaBtn').href = `https://wa.me/${WHATSAPP_ORDER_NUMBER}?text=Assalam-o-Alaikum%20Pak%20Herbal%204%20Men,%20I%20want%20to%20order%20${encodeURIComponent(p.title)}%20for%20Rs.%20${encodeURIComponent(p.price)}.`;
+
+                document.getElementById('productDetailModal').style.display = 'flex';
+                logProductCheck(p.title);
+            }
+        }
+
+        function closeProductDetailModal() {
+            document.getElementById('productDetailModal').style.display = 'none';
         }
 
         // Mouse Move Glow Follower
@@ -872,7 +979,7 @@
             }
 
             container.innerHTML = productsToRender.map((p, idx) => `
-                <div class="product-card golden-glow-card water-reflection" onclick="logProductCheck('${p.title}')">
+                <div class="product-card golden-glow-card water-reflection" onclick="openProductDetailModal('${p.id}')">
                     <div class="p-img-box">
                         <span class="badge-tag">100% Qudrati</span>
                         <img src="${p.image}" alt="${p.title}">
