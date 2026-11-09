@@ -145,43 +145,6 @@
             margin-bottom: 5px;
         }
 
-        .ad-guarantee-box {
-            background: linear-gradient(135deg, rgba(6, 95, 70, 0.8), rgba(15, 23, 42, 0.9));
-            border: 2px dashed #00f2fe;
-            border-radius: 14px;
-            padding: 18px;
-            margin: 18px 0;
-            text-align: center;
-            box-shadow: inset 0 0 15px rgba(0, 242, 254, 0.2);
-        }
-        .ad-badge {
-            background: #ff0050;
-            color: #fff;
-            font-size: 0.75rem;
-            font-weight: 900;
-            padding: 4px 12px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-        .ad-text-main {
-            font-size: 1.05rem;
-            color: #ffffff;
-            line-height: 1.6;
-            font-weight: 600;
-            direction: rtl;
-        }
-        .ad-text-highlight {
-            color: #ffd700;
-            font-weight: 900;
-            font-size: 1.15rem;
-            display: block;
-            margin-top: 8px;
-            text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
-        }
-
         .open-shutter-btn {
             background: linear-gradient(135deg, #00f2fe, #047857);
             color: #fff;
@@ -196,6 +159,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             width: 100%;
+            margin-top: 15px;
         }
         .open-shutter-btn:hover {
             transform: scale(1.03);
@@ -245,7 +209,7 @@
         .nav-link.sale { color: var(--bh-gold); display: flex; align-items: center; gap: 5px; }
         .hot-badge { background: var(--bh-gold); color: #fff; font-size: 0.6rem; padding: 2px 5px; border-radius: 3px; position: absolute; top: 2px; right: 0; }
 
-        /* TikTok Shop Style Live Video Banner Section */
+        /* TikTok Shop Style Bulk Image Slider Showcase Section */
         .tiktok-video-section {
             background: linear-gradient(135deg, #0f172a, #065f46);
             padding: 20px 4%;
@@ -257,21 +221,29 @@
             border-bottom: 2px solid var(--bh-gold);
             flex-wrap: wrap;
         }
-        .tiktok-video-box {
+        .bulk-slider-box {
             flex: 1;
             min-width: 280px;
-            max-width: 450px;
-            height: 250px;
+            max-width: 420px;
+            height: 260px;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
             border: 2px solid #00f2fe;
             position: relative;
+            background: #000;
         }
-        .tiktok-video-box video {
+        .bulk-slide-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            position: absolute;
+            top: 0; left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .bulk-slide-img.active {
+            opacity: 1;
         }
         .tiktok-video-info { flex: 2; min-width: 280px; }
         .tiktok-badge {
@@ -288,22 +260,19 @@
             box-shadow: 0 0 10px #ff0050;
         }
 
-        /* Hero Banner */
+        /* Hero Banner with Shaadi Course Guarantee Text */
         .hero-banner { 
             position: relative;
-            padding: 80px 20px; 
+            padding: 70px 20px; 
             text-align: center; 
             color: #fff; 
             overflow: hidden; 
         }
         .hero-video-bg {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
+            top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
             transform: translate(-50%, -50%);
             object-fit: cover;
             z-index: 1;
@@ -311,13 +280,38 @@
         .hero-video-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(rgba(6, 95, 70, 0.88), rgba(15, 23, 42, 0.85));
+            background: linear-gradient(rgba(6, 95, 70, 0.92), rgba(15, 23, 42, 0.90));
             z-index: 2;
         }
-        .hero-content { max-width: 900px; margin: 0 auto; position: relative; z-index: 3; }
-        .hero-content h1 { font-size: 2.8rem; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 10px; line-height: 1.2; }
-        .hero-content p { font-size: 1.15rem; font-weight: 500; color: #e2e8f0; margin-bottom: 20px; }
-        .hero-tag { background: var(--bh-gold); color: #fff; display: inline-block; font-size: 0.85rem; font-weight: 800; padding: 8px 20px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .hero-content { max-width: 850px; margin: 0 auto; position: relative; z-index: 3; }
+        .hero-content h1 { font-size: 2.6rem; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 12px; line-height: 1.2; text-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .hero-tag { background: #ff0050; color: #fff; display: inline-block; font-size: 0.8rem; font-weight: 900; padding: 6px 18px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; box-shadow: 0 0 12px #ff0050; }
+        
+        .hero-guarantee-box {
+            background: rgba(15, 23, 42, 0.75);
+            border: 2px dashed #ffd700;
+            border-radius: 14px;
+            padding: 22px;
+            margin-top: 15px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.25);
+        }
+        .hero-guarantee-text {
+            font-size: 1.1rem;
+            color: #ffffff;
+            line-height: 1.6;
+            font-weight: 600;
+            direction: rtl;
+        }
+        .hero-guarantee-highlight {
+            color: #ffd700;
+            font-weight: 900;
+            font-size: 1.18rem;
+            display: block;
+            margin-top: 10px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+            line-height: 1.5;
+        }
 
         /* Trust Banner Box */
         .trust-banner { background: #fff; border: 1px solid #bbf7d0; border-radius: 12px; padding: 18px 25px; margin-bottom: 35px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; box-shadow: 0 4px 15px rgba(6, 95, 70, 0.05); }
@@ -382,16 +376,11 @@
             flex-direction: column;
             gap: 10px;
         }
-        .fb-user-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .fb-user-header { display: flex; justify-content: space-between; align-items: center; }
         .fb-user-name { font-weight: 900; color: var(--bh-dark); font-size: 0.95rem; }
         .fb-user-city { font-size: 0.75rem; color: #64748b; background: #e2e8f0; padding: 2px 8px; border-radius: 10px; font-weight: 700; }
         .fb-text-msg { font-size: 0.88rem; color: #334155; line-height: 1.5; font-weight: 500; }
         
-        /* Official Response Box */
         .fb-official-reply {
             background: #f0fdf4;
             border-left: 3px solid var(--bh-green);
@@ -480,20 +469,14 @@
 
     <!-- OPENING AD SHUTTER SCREEN -->
     <div id="introScreen">
-        <div class="shutter-glow-box">
+        <div class="shutter-glow-box" style="max-width: 650px;">
             <h1 class="shutter-title">PAK HERBAL 4 MEN</h1>
             <p style="color: #00f2fe; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px;">🌿 100% Pure Herbal Oils & Natural Remedies</p>
 
-            <div class="ad-guarantee-box">
-                <span class="ad-badge"><i class="fa-solid fa-certificate"></i> Official Brand Guarantee</span>
-                <div class="ad-text-main">
+            <div style="background: linear-gradient(135deg, rgba(6, 95, 70, 0.8), rgba(15, 23, 42, 0.9)); border: 2px dashed #00f2fe; border-radius: 14px; padding: 18px; margin: 15px 0; text-align: center;">
+                <span style="background: #ff0050; color: #fff; font-size: 0.75rem; font-weight: 900; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 8px;">Official Brand Guarantee</span>
+                <div style="font-size: 1.02rem; color: #ffffff; line-height: 1.6; font-weight: 600; direction: rtl;">
                     ہماری تمام پروڈکٹس <strong>100% قدرتی (Natural)</strong> ہیں اور بالکل **بغیر کسی سائڈ ایفیکٹ** کے تیار کی جاتی ہیں۔
-                    <span class="ad-text-highlight">
-                        اگر ہماری پروڈکٹس سے آپ کا مرض دور نہ ہو یا اس میں بہترین افاقہ نہ آئے، تو آپ ہماری شاپ پر تشریف لائیں اور اپنے 100% پیسے واپس لے جائیں!
-                    </span>
-                </div>
-                <div style="margin-top: 12px; color: #cbd5e1; font-size: 0.82rem; font-weight: bold; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 8px;">
-                    یہ گارنٹی ہی ہمارا معیار اور ہماری پروڈکٹس کی اصل پہچان ہے۔
                 </div>
             </div>
 
@@ -558,13 +541,15 @@
         </div>
     </nav>
 
-    <!-- TikTok Shop Style Live Video Banner Section -->
+    <!-- TikTok Shop Style Bulk Image Slider Showcase Section -->
     <section class="tiktok-video-section">
-        <div class="tiktok-video-box">
-            <video autoplay muted loop playsinline controls>
-                <source src="promo.mp4" type="video/mp4">
-                Your browser does not support HTML5 video.
-            </video>
+        <div class="bulk-slider-box" id="bulkImageSlider">
+            <!-- Bulk images sliding 1 by 1 automatically -->
+            <img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800" class="bulk-slide-img active" alt="Product 1">
+            <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800" class="bulk-slide-img" alt="Product 2">
+            <img src="https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=800" class="bulk-slide-img" alt="Product 3">
+            <img src="https://images.unsplash.com/photo-1550572017-edd951b55104?w=800" class="bulk-slide-img" alt="Product 4">
+            <img src="https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=800" class="bulk-slide-img" alt="Product 5">
         </div>
         <div class="tiktok-video-info">
             <span class="tiktok-badge"><i class="fa-brands fa-tiktok"></i> TikTok Live Showcase</span>
@@ -572,13 +557,13 @@
             <p style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 15px;">
                 Discover our pure organic formulation prepared with Tilla Nafees, Zafrani & Chandi Varq capsules, special heart-safe Ginseng, and anti-dandruff herbal hair solutions!
             </p>
-            <a href="https://wa.me/923424342996?text=Assalam-o-Alaikum%20Pak%20Herbal%204%20Men,%20I%20saw%20your%20TikTok%20showcase%20and%20want%20to%20order." target="_blank" class="ripple-btn" style="background: var(--bh-whatsapp); color: #fff; padding: 10px 20px; border-radius: 6px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+            <a href="https://wa.me/923424342996?text=Assalam-o-Alaikum%20Pak%20Herbal%204%20Men,%20I%20saw%20your%20showcase%20and%20want%20to%20order." target="_blank" class="ripple-btn" style="background: var(--bh-whatsapp); color: #fff; padding: 10px 20px; border-radius: 6px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
                 <i class="fa-brands fa-whatsapp"></i> Order Direct via WhatsApp
             </a>
         </div>
     </section>
 
-    <!-- Hero Banner with Continuous Background Video -->
+    <!-- Hero Banner with Shaadi Course Guarantee Text -->
     <section class="hero-banner water-reflection">
         <video autoplay muted loop playsinline class="hero-video-bg">
             <source src="promo.mp4" type="video/mp4">
@@ -586,9 +571,17 @@
         </video>
         <div class="hero-video-overlay"></div>
         <div class="hero-content">
-            <span class="hero-tag">Natural Healing & Pure Ingredients</span>
+            <span class="hero-tag">Official Brand Guarantee</span>
             <h1>P A K &nbsp; H E R B A L &nbsp; 4 &nbsp; M E N</h1>
-            <p>100% Qudrati Ajzaa se tayyar shuda khalis herbal oils aur capsules jo dekhte hi kharidne par majboor kar dein!</p>
+            
+            <div class="hero-guarantee-box">
+                <div class="hero-guarantee-text">
+                    شاڈی کورس گارانتی کے ساتھ! شادی سے 2 ہفتہ پہلے آئیں، بڑی سے بڑی پریشانی اور جو نقص ہے، InshaAllah گارانتی کے ساتھ 14 دن میں مسئلہ حل ہوگا۔
+                    <span class="hero-guarantee-highlight">
+                        اگر فرق نہ پڑے تو ادا کی گئی تمام رقم ہم سے ہماری شاپ پر آ کر واپس لے جائیں!
+                    </span>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -623,7 +616,6 @@
                 <span style="font-size: 0.85rem; color: #047857; font-weight: 700;">⭐ 5.0 Rating (60 Verified Reviews)</span>
             </h2>
 
-            <!-- Grid displaying all 60 reviews & replies -->
             <div id="publicFeedbackGrid" class="feedback-public-grid">
                 <!-- Javascript dynamic population -->
             </div>
@@ -896,15 +888,15 @@
             { name: "Rashid Ali", city: "Quetta", message: "WhatsApp par fast response mila aur delivery bhi 2 din mein ho gayi.", time: "01/11/2026", reply: "Shukriya Rashid Bhai! Hum poore Pakistan mein fast aur secret delivery yaqini banate hain." },
             { name: "Noman Sheikh", city: "Hyderabad", message: "Sikri ka oil boht zabardast hai, sar ki kharish bilkul khatam.", reply: "JazakAllah Noman Sahab! Khushki aur kharish ke liye 100% shafi ilaj hai.", time: "01/11/2026" },
             { name: "Waqas Chaudhry", city: "Sargodha", message: "Capsule Zafrani original herbal hai, koi side effect nahi hua.", reply: "Shukriya Waqas Bhai! Hamari tamam products zero side effect ke sath tayyar hoti hain.", time: "31/10/2026" },
-            { name: "Asad Malik", city: "Islamabad", message: "Pak Herbal 4 Men ki tamam products genuine aur qudrati hain.", reply: "JazakAllah Asad Bhai! Aap ka aetmad hi hamari আসল kamyabi hai.", time: "31/10/2026" },
+            { name: "Asad Malik", city: "Islamabad", message: "Pak Herbal 4 Men ki tamam products genuine aur qudrati hain.", reply: "JazakAllah Asad Bhai! Aap ka aetmad hi hamari asli kamyabi hai.", time: "31/10/2026" },
             { name: "Fahad Jameel", city: "Bahawalpur", message: "Delivery packing boht secret aur achi thi. JazakAllah.", reply: "Shukriya Fahad Sahib! Customer ki privacy aur discreet packaging hamari pehli tarjeeh hai.", time: "30/10/2026" },
             { name: "Imran Abbasi", city: "Abbottabad", message: "Herbal Shampoo se balo mein natural shine aa gayi hai.", reply: "JazakAllah Imran Bhai! Behtareen results ke liye Herbal Shampoo ka mustaqil istemal rakhein.", time: "30/10/2026" },
             { name: "Zeeshan Safdar", city: "Sahiwal", message: "Capsule Toba Chandi warq wala boht hi taqatwar hai.", reply: "Shukriya Zeeshan Bhai! Asli Chandi Varq jism ko fit aur active rakhta hai.", time: "29/10/2026" },
             { name: "Babar Azam", city: "Lahore", message: "Tilla Nafees use kiya, result boht kamal ka hai.", reply: "JazakAllah Babar Bhai! Tilla Nafees jism aur pathon ko nayi taqat deta hai.", time: "29/10/2026" },
-            { name: "Kashif Riaz", city: "Kasur", message: "Khushki ke oil se 2 baar mein fark mehsus hua.", reply: "Shukriya Kashif Sahib! Pehli hi appication se khushki khatam hona shuru ho jati hai.", time: "28/10/2026" },
+            { name: "Kashif Riaz", city: "Kasur", message: "Khushki ke oil se 2 baar mein fark mehsus hua.", reply: "Shukriya Kashif Sahib! Pehli hi application se khushki khatam hona shuru ho jati hai.", time: "28/10/2026" },
             { name: "Shoaib Akhtar", city: "Rawalpindi", message: "Pure herbal ajzaa hain, koi chemical nahi.", reply: "JazakAllah Shoaib Bhai! PAK HERBAL 4 MEN 100% chemical free formulas par mabni hai.", time: "28/10/2026" },
             { name: "Danish Aziz", city: "Karachi", message: "Ginseng Capsule se energy level improve hua hai.", reply: "Shukriya Danish Sahib! Qudrati Ginseng jism ko taza-dam rakhta hai.", time: "27/10/2026" },
-            { name: "Yasir Shah", city: "Swabi", message: "Boht shukriya Pak Herbal team, 100% recommended!", reply: "Bohat Shukriya Yasir Bhai! Aap ki taraf se recommend karne ka behad shukriya.", time: "27/10/2026" },
+            { name: "Yasir Shah", city: "Swabi", message: "Boht shukriya Pak Herbal team, 100% recommended!", reply: "Bohat Shukriya Yasir Bhai! Aap ki taraf سے recommend karne ka behad shukriya.", time: "27/10/2026" },
             { name: "Farhan Saeed", city: "Lahore", message: "Capsule Zafrani aur Tilla dono boht zabardast hain.", reply: "JazakAllah Farhan Sahab! Zafrani Course aur Tilla Nafees ka combination best result deta hai.", time: "26/10/2026" },
             { name: "Nabeel Zafar", city: "Gujrat", message: "Fast delivery aur behtareen quality products.", reply: "Shukriya Nabeel Bhai! Hum hamesha fast shipping aur top quality maintain karte hain.", time: "26/10/2026" },
             { name: "Umer Akmal", city: "Lahore", message: "Herbal Shampoo rozana use karne ke liye perfect hai.", reply: "JazakAllah Umer Sahab! Is mein koi haram ya chemical ajza nahi hain.", time: "25/10/2026" },
@@ -922,7 +914,7 @@
             { name: "Ameer Hamza", city: "Faisalabad", message: "Capsule Toba Chandi Warq wala lajawab hai.", reply: "JazakAllah Ameer Hamza Bhai! Asli Chandi Varq aur Tibb-e-Unani ka purana nuskha hai.", time: "19/10/2026" },
             { name: "Waqar Younis", city: "Vehari", message: "Tilla Nafees ki khushboo aur asar dono kamal hain.", reply: "Shukriya Waqar Sahib! Pure desi jari bootio'n ka arooq shamil hai.", time: "19/10/2026" },
             { name: "Wasim Akram", city: "Lahore", message: "Quality par koi compromise nahi, boht behtareen.", reply: "JazakAllah Wasim Bhai! Quality hi Pak Herbal 4 Men ki pehchan hai.", time: "18/10/2026" },
-            { name: "Aaqib Javed", city: "Sheikhupura", message: "Capsule Zafrani se energy aur stamina barha hai.", reply: "Shukriya Aaqib Sahib! Zafrani Capsules stamina aur energy ko boost karte hain.", time: "18/10/2026" },
+            { name: "Aaqib Javed", city: "Sheikhupura", message: "Capsule Zafrani سے energy aur stamina barha hai.", reply: "Shukriya Aaqib Sahib! Zafrani Capsules stamina aur energy ko boost karte hain.", time: "18/10/2026" },
             { name: "Inzamam Ul Haq", city: "Multan", message: "Pak Herbal 4 Men ki tamaam cheezein asli hain.", reply: "JazakAllah Inzamam Bhai! Pure & Organic Herbal remedies guarantee ke sath hain.", time: "17/10/2026" },
             { name: "Saeed Anwar", city: "Karachi", message: "Balo ki khushki bilkul khatam ho gayi hai.", reply: "Shukriya Saeed Sahib! Hair oil regularly use karein behtareen baalon ke liye.", time: "17/10/2026" },
             { name: "Mushtaq Ahmed", city: "Lahore", message: "Herbal Shampoo baalo ko mulayam rakhta hai.", reply: "JazakAllah Mushtaq Bhai! Smooth & silky hair solution without any harsh chemicals.", time: "16/10/2026" },
@@ -952,7 +944,20 @@
         window.addEventListener('DOMContentLoaded', () => {
             renderStoreProducts(window.storeProducts);
             renderPublicFeedbacks();
+            initBulkImageSlider();
         });
+
+        // Automatic 1-by-1 Bulk Image Slider Logic
+        function initBulkImageSlider() {
+            const slides = document.querySelectorAll('.bulk-slide-img');
+            if(slides.length === 0) return;
+            let currentSlide = 0;
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 3000); // Har 3 second baad agli image aye gi
+        }
 
         // Open Shop Shutter Function
         function openWebsiteShutter() {
